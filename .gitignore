@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# SimpleCharacterBuilder: local character files saved while experimenting
+*.character.json
