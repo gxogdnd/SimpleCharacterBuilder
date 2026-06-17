@@ -1,0 +1,6 @@
+# Disable blank issues so people use one of the templates below.
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & help
+    url: https://github.com/gxogdnd/SimpleCharacterBuilder/discussions
+    about: New to the project or stuck? Ask here — no question is too basic.
