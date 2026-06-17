@@ -15,15 +15,31 @@ through review, and get it merged.
 
 ## What it does (so far)
 
-This is an early scaffold. Today the CLI only reports its version:
+You can create a character with ability scores, save it to a JSON file, and
+print a sheet showing each score and its modifier:
 
 ```console
-$ charsheet --version
-charsheet, version 0.1.0
+$ charsheet create --name "Bruenor" --race Dwarf --class Fighter --strength 16 --constitution 15
+Created Bruenor and saved to bruenor.character.json
+
+$ charsheet show bruenor.character.json
+Bruenor
+Level 1 Dwarf Fighter
+
+Ability Scores
+--------------
+STR  16  (+3)
+DEX  10  (+0)
+CON  15  (+2)
+INT  10  (+0)
+WIS  10  (+0)
+CHA  10  (+0)
 ```
 
-Everything else — ability scores, races, classes, skills, saving/loading a
-character, and eventually the full 5e SRD — is built up one issue at a time.
+Run `charsheet create --help` to see every option.
+
+More — proficiency bonus, hit points, skills, validated SRD races/classes,
+leveling up, and eventually the full 5e SRD — is built up one issue at a time.
 That backlog *is* the curriculum.
 
 ## Quickstart
