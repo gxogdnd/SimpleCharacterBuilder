@@ -82,6 +82,8 @@ ruff format .          # auto-format your code
 
 The same checks run automatically on every pull request via GitHub Actions.
 
+Maintainers: see **[RELEASING.md](RELEASING.md)** for how to cut a release.
+
 ## License
 
 [MIT](LICENSE) © 2026 MuckGX
