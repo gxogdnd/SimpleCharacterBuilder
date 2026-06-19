@@ -41,6 +41,25 @@ def test_show_displays_scores_and_modifiers(tmp_path) -> None:
     assert "DEX  16  (+3)" in result.output
 
 
+def test_races_command_lists_known_races() -> None:
+    result = CliRunner().invoke(main, ["races"])
+    assert result.exit_code == 0
+    assert "Human" in result.output
+    assert "Elf" in result.output
+
+
+def test_classes_command_shows_hit_die() -> None:
+    result = CliRunner().invoke(main, ["classes"])
+    assert result.exit_code == 0
+    assert "Wizard (d6)" in result.output
+
+
+def test_skills_command_shows_governing_ability() -> None:
+    result = CliRunner().invoke(main, ["skills"])
+    assert result.exit_code == 0
+    assert "Stealth (DEX)" in result.output
+
+
 def test_create_rejects_an_out_of_range_score(tmp_path) -> None:
     runner = CliRunner()
     output = tmp_path / "x.json"
