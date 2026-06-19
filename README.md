@@ -1,5 +1,7 @@
 # SimpleCharacterBuilder
 
+[![CI](https://github.com/gxogdnd/SimpleCharacterBuilder/actions/workflows/ci.yml/badge.svg)](https://github.com/gxogdnd/SimpleCharacterBuilder/actions/workflows/ci.yml)
+
 A small command-line tool for building **Dungeons & Dragons 5e** character
 sheets — and, just as importantly, a **hands-on learning project** for people
 who are new to Python and to contributing on GitHub.
@@ -83,3 +85,12 @@ The same checks run automatically on every pull request via GitHub Actions.
 ## License
 
 [MIT](LICENSE) © 2026 MuckGX
+
+## Attribution
+
+This project includes material from the **System Reference Document 5.1**
+("SRD 5.1") by Wizards of the Coast LLC, available under the
+[Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/legalcode).
+The SRD content (the data in `src/charsheet/data/`) is owned by Wizards of the
+Coast and used under that licence; it is not covered by this project's MIT
+licence. See the [rules primer](docs/dnd-rules.md) for more.
