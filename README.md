@@ -17,8 +17,24 @@ through review, and get it merged.
 
 ## What it does (so far)
 
-You can create a character with ability scores, save it to a JSON file, and
-print a sheet showing each score and its modifier:
+The easiest way to make a character is the interactive builder, which asks one
+question at a time and lets you pick a race and class from the SRD lists:
+
+```console
+$ charsheet new
+Let's build a character. Press Enter to accept each [default].
+
+Name: Bruenor
+Race (Dragonborn, Dwarf, Elf, ...) [Human]: Dwarf
+Class (Barbarian, Bard, ...) [Fighter]: Fighter
+Level [1]: 1
+
+Ability scores (1-30):
+  Strength [10]: 16
+  ...
+```
+
+Prefer a one-liner? The same thing with flags (handy for scripts):
 
 ```console
 $ charsheet create --name "Bruenor" --race Dwarf --class Fighter --strength 16 --constitution 15

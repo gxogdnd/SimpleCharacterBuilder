@@ -19,6 +19,11 @@ def _abbr(ability: str) -> str:
     return rules.ABILITY_ABBREVIATIONS[ability]
 
 
+def _default_character_path(name: str) -> str:
+    """The default file name for a character, derived from their name."""
+    return f"{name.lower().replace(' ', '_')}.character.json"
+
+
 @click.group()
 @click.version_option(__version__, prog_name="charsheet")
 def main() -> None:
@@ -87,9 +92,68 @@ def create(
         level=level,
         abilities=AbilityScores(**ability_scores),
     )
-    destination = output or f"{name.lower().replace(' ', '_')}.character.json"
+    destination = output or _default_character_path(name)
     path = save_character(character, destination)
     click.echo(f"Created {character.name} and saved to {path}")
+
+
+@main.command()
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(dir_okay=False, writable=True),
+    help="Where to save the character file. Defaults to <name>.character.json.",
+)
+def new(output: str | None) -> None:
+    """Create a character interactively, one question at a time.
+
+    A friendlier alternative to ``create`` and its many flags: you'll be asked
+    for each value in turn, choosing race and class from the SRD lists. Press
+    Enter to accept the value shown in [brackets].
+    """
+    click.echo("Let's build a character. Press Enter to accept each [default].\n")
+
+    name = click.prompt("Name")
+
+    race_names = [r["name"] for r in reference.load_races()]
+    race = click.prompt(
+        "Race",
+        type=click.Choice(race_names, case_sensitive=False),
+        default="Human",
+        show_choices=True,
+    )
+
+    class_names = [c["name"] for c in reference.load_classes()]
+    char_class = click.prompt(
+        "Class",
+        type=click.Choice(class_names, case_sensitive=False),
+        default="Fighter",
+        show_choices=True,
+    )
+
+    level = click.prompt("Level", type=click.IntRange(min=1), default=1)
+
+    click.echo("\nAbility scores (1-30):")
+    scores = {
+        ability: click.prompt(
+            f"  {ability.capitalize()}",
+            type=click.IntRange(1, 30),
+            default=10,
+        )
+        for ability in rules.ABILITIES
+    }
+
+    character = Character(
+        name=name,
+        race=race,
+        char_class=char_class,
+        level=level,
+        abilities=AbilityScores(**scores),
+    )
+    destination = output or _default_character_path(name)
+    path = save_character(character, destination)
+    click.echo(f"\nCreated {character.name} and saved to {path}\n")
+    _print_character(character)
 
 
 @main.command()
