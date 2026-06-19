@@ -9,9 +9,14 @@ from __future__ import annotations
 
 import click
 
-from charsheet import __version__, rules
+from charsheet import __version__, reference, rules
 from charsheet.models import AbilityScores, Character
 from charsheet.storage import load_character, save_character
+
+
+def _abbr(ability: str) -> str:
+    """Short, upper-case form of an ability name, e.g. ``"dexterity"`` -> ``"DEX"``."""
+    return rules.ABILITY_ABBREVIATIONS[ability]
 
 
 @click.group()
@@ -93,6 +98,32 @@ def show(path: str) -> None:
     """Display the character stored in PATH."""
     character = load_character(path)
     _print_character(character)
+
+
+@main.command()
+def races() -> None:
+    """List the playable races from the SRD."""
+    for race in reference.load_races():
+        increases = ", ".join(
+            f"{_abbr(ability)} +{bonus}"
+            for ability, bonus in race["ability_score_increases"].items()
+        )
+        click.echo(f"{race['name']} — {increases}")
+
+
+@main.command()
+def classes() -> None:
+    """List the character classes from the SRD."""
+    for char_class in reference.load_classes():
+        saves = ", ".join(_abbr(a) for a in char_class["saving_throw_proficiencies"])
+        click.echo(f"{char_class['name']} (d{char_class['hit_die']}) — saves: {saves}")
+
+
+@main.command()
+def skills() -> None:
+    """List the skills and the ability each one uses."""
+    for skill in reference.load_skills():
+        click.echo(f"{skill['name']} ({_abbr(skill['ability'])})")
 
 
 def _print_character(character: Character) -> None:

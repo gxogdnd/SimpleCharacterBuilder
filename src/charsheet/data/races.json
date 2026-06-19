@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Dragonborn",
+    "ability_score_increases": { "strength": 2, "charisma": 1 },
+    "size": "Medium",
+    "speed": 30,
+    "notes": ""
+  },
+  {
+    "name": "Dwarf",
+    "ability_score_increases": { "constitution": 2 },
+    "size": "Medium",
+    "speed": 25,
+    "notes": "Subraces grant a further increase (e.g. Hill Dwarf adds +1 Wisdom)."
+  },
+  {
+    "name": "Elf",
+    "ability_score_increases": { "dexterity": 2 },
+    "size": "Medium",
+    "speed": 30,
+    "notes": "Subraces grant a further increase (e.g. High Elf adds +1 Intelligence)."
+  },
+  {
+    "name": "Gnome",
+    "ability_score_increases": { "intelligence": 2 },
+    "size": "Small",
+    "speed": 25,
+    "notes": "Subraces grant a further increase (e.g. Rock Gnome adds +1 Constitution)."
+  },
+  {
+    "name": "Half-Elf",
+    "ability_score_increases": { "charisma": 2 },
+    "size": "Medium",
+    "speed": 30,
+    "notes": "Also increase two different ability scores of your choice by 1."
+  },
+  {
+    "name": "Half-Orc",
+    "ability_score_increases": { "strength": 2, "constitution": 1 },
+    "size": "Medium",
+    "speed": 30,
+    "notes": ""
+  },
+  {
+    "name": "Halfling",
+    "ability_score_increases": { "dexterity": 2 },
+    "size": "Small",
+    "speed": 25,
+    "notes": "Subraces grant a further increase (e.g. Lightfoot adds +1 Charisma)."
+  },
+  {
+    "name": "Human",
+    "ability_score_increases": {
+      "strength": 1,
+      "dexterity": 1,
+      "constitution": 1,
+      "intelligence": 1,
+      "wisdom": 1,
+      "charisma": 1
+    },
+    "size": "Medium",
+    "speed": 30,
+    "notes": ""
+  },
+  {
+    "name": "Tiefling",
+    "ability_score_increases": { "intelligence": 1, "charisma": 2 },
+    "size": "Medium",
+    "speed": 30,
+    "notes": ""
+  }
+]

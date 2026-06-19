@@ -11,7 +11,7 @@ through review, and get it merged.
 
 > New to all of this? Start with **[CONTRIBUTING.md](CONTRIBUTING.md)** and the
 > guided **[learning path](docs/learning-path/)**. You do not need to know D&D —
-> a rules primer will live in `docs/dnd-rules.md`.
+> read the short **[rules primer](docs/dnd-rules.md)** if a term is unfamiliar.
 
 ## What it does (so far)
 
@@ -38,9 +38,17 @@ CHA  10  (+0)
 
 Run `charsheet create --help` to see every option.
 
-More — proficiency bonus, hit points, skills, validated SRD races/classes,
-leveling up, and eventually the full 5e SRD — is built up one issue at a time.
-That backlog *is* the curriculum.
+You can also browse the bundled 5e SRD reference data:
+
+```console
+$ charsheet races      # e.g. "Dwarf — CON +2"
+$ charsheet classes    # e.g. "Wizard (d6) — saves: INT, WIS"
+$ charsheet skills     # e.g. "Stealth (DEX)"
+```
+
+More — proficiency bonus, hit points, skill bonuses, validated SRD
+races/classes, leveling up, and eventually the full 5e SRD — is built up one
+issue at a time. That backlog *is* the curriculum.
 
 ## Quickstart
 
