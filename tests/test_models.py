@@ -26,6 +26,22 @@ def test_ability_scores_reject_unknown_ability() -> None:
         AbilityScores().modifier("luck")
 
 
+def test_ability_scores_reject_below_minimum() -> None:
+    with pytest.raises(ValueError):
+        AbilityScores(strength=0)
+
+
+@pytest.mark.parametrize("score", [1, 30])
+def test_ability_score_boundary_value(score: int) -> None:
+    ability_scores = AbilityScores(strength=score)
+    assert ability_scores.strength == score
+
+
+def test_ability_scores_reject_non_integer_value() -> None:
+    with pytest.raises(TypeError):
+        AbilityScores("twelve")
+
+
 def test_character_requires_a_name() -> None:
     with pytest.raises(ValueError):
         Character(name="  ")
