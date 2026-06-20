@@ -91,6 +91,38 @@ def test_new_reprompts_on_an_unknown_race(tmp_path) -> None:
     assert load_character(output).race == "Dwarf"
 
 
+def test_menu_quit_immediately() -> None:
+    # Choosing 6 (Quit) should leave the loop cleanly.
+    result = CliRunner().invoke(main, ["menu"], input="6\n")
+    assert result.exit_code == 0
+    assert "SimpleCharacterBuilder" in result.output
+    assert "Goodbye!" in result.output
+
+
+def test_menu_browse_then_quit() -> None:
+    # 3 = browse races, then 6 = quit. The menu should redisplay and then exit.
+    result = CliRunner().invoke(main, ["menu"], input="3\n6\n")
+    assert result.exit_code == 0
+    assert "Human" in result.output  # a race was listed
+    assert result.output.count("=== SimpleCharacterBuilder ===") == 2
+
+
+def test_menu_create_then_quit() -> None:
+    runner = CliRunner()
+    # 1 = create; then the new-character answers; then 6 = quit.
+    answers = "\n".join(
+        ["1", "Mialee", "Elf", "Wizard", "1", "8", "14", "12", "17", "10", "11", "6"]
+    )
+    # isolated_filesystem gives a temp cwd, so the default-path save is cleaned up.
+    with runner.isolated_filesystem():
+        result = runner.invoke(main, ["menu"], input=answers + "\n")
+        assert result.exit_code == 0, result.output
+        assert "Created Mialee" in result.output
+        saved = load_character("mialee.character.json")
+        assert saved.char_class == "Wizard"
+        assert saved.abilities.intelligence == 17
+
+
 def test_races_command_lists_known_races() -> None:
     result = CliRunner().invoke(main, ["races"])
     assert result.exit_code == 0

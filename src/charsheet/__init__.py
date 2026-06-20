@@ -5,4 +5,4 @@ project for people new to Python and to contributing on GitHub. See the docs/
 folder and CONTRIBUTING.md for the guided learning path.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"

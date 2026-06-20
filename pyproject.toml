@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simple-character-builder"
-version = "0.2.0"
+version = "0.3.0"
 description = "A simple CLI tool for building Dungeons & Dragons (5e SRD) character sheets — and a hands-on learning project for new Python and GitHub contributors."
 readme = "README.md"
 requires-python = ">=3.10"
