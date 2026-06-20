@@ -3,6 +3,10 @@
 Built with `click <https://click.palletsprojects.com/>`_. Each command is a
 small function decorated with ``@main.command()``. Adding a new command is a
 great first contribution — copy the shape of ``show`` and go from there.
+
+Most commands delegate their real work to a plain ``_helper`` function. That way
+the interactive ``menu`` can reuse exactly the same behaviour as the individual
+commands, with no duplication.
 """
 
 from __future__ import annotations
@@ -111,6 +115,11 @@ def new(output: str | None) -> None:
     for each value in turn, choosing race and class from the SRD lists. Press
     Enter to accept the value shown in [brackets].
     """
+    _interactive_new(output)
+
+
+def _interactive_new(output: str | None = None) -> None:
+    """Prompt for each field and save a new character (shared by ``new``/``menu``)."""
     click.echo("Let's build a character. Press Enter to accept each [default].\n")
 
     name = click.prompt("Name")
@@ -160,13 +169,25 @@ def new(output: str | None) -> None:
 @click.argument("path", type=click.Path(exists=True, dir_okay=False))
 def show(path: str) -> None:
     """Display the character stored in PATH."""
-    character = load_character(path)
-    _print_character(character)
+    _print_character(load_character(path))
+
+
+def _interactive_show() -> None:
+    """Ask for a character file and display it (shared by ``menu``)."""
+    path = click.prompt(
+        "Path to character file",
+        type=click.Path(exists=True, dir_okay=False),
+    )
+    _print_character(load_character(path))
 
 
 @main.command()
 def races() -> None:
     """List the playable races from the SRD."""
+    _list_races()
+
+
+def _list_races() -> None:
     for race in reference.load_races():
         increases = ", ".join(
             f"{_abbr(ability)} +{bonus}"
@@ -178,6 +199,10 @@ def races() -> None:
 @main.command()
 def classes() -> None:
     """List the character classes from the SRD."""
+    _list_classes()
+
+
+def _list_classes() -> None:
     for char_class in reference.load_classes():
         saves = ", ".join(_abbr(a) for a in char_class["saving_throw_proficiencies"])
         click.echo(f"{char_class['name']} (d{char_class['hit_die']}) — saves: {saves}")
@@ -186,8 +211,47 @@ def classes() -> None:
 @main.command()
 def skills() -> None:
     """List the skills and the ability each one uses."""
+    _list_skills()
+
+
+def _list_skills() -> None:
     for skill in reference.load_skills():
         click.echo(f"{skill['name']} ({_abbr(skill['ability'])})")
+
+
+@main.command()
+def menu() -> None:
+    """Launch an interactive menu — no flags needed.
+
+    Pick an action by number; the menu loops until you choose Quit.
+    """
+    # Each entry maps a choice to a (label, handler) pair. A handler of None
+    # means "quit". The handlers are the same helpers the other commands use.
+    actions: dict[str, tuple[str, object]] = {
+        "1": ("Create a new character", _interactive_new),
+        "2": ("Show a saved character", _interactive_show),
+        "3": ("Browse races", _list_races),
+        "4": ("Browse classes", _list_classes),
+        "5": ("Browse skills", _list_skills),
+        "6": ("Quit", None),
+    }
+
+    while True:
+        click.echo("\n=== SimpleCharacterBuilder ===")
+        for key, (label, _handler) in actions.items():
+            click.echo(f"  {key}) {label}")
+
+        choice = click.prompt(
+            "Choose",
+            type=click.Choice(list(actions)),
+            show_choices=True,
+        )
+        label, handler = actions[choice]
+        if handler is None:
+            click.echo("Goodbye! 🎲")
+            break
+        click.echo("")
+        handler()
 
 
 def _print_character(character: Character) -> None:

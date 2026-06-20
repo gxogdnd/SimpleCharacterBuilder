@@ -17,8 +17,12 @@ through review, and get it merged.
 
 ## What it does (so far)
 
-The easiest way to make a character is the interactive builder, which asks one
-question at a time and lets you pick a race and class from the SRD lists:
+The friendliest way in is the interactive menu — run `charsheet menu` and pick
+an action by number (create, show, browse races/classes/skills); it loops until
+you quit.
+
+Or jump straight to the interactive builder, which asks one question at a time
+and lets you pick a race and class from the SRD lists:
 
 ```console
 $ charsheet new
