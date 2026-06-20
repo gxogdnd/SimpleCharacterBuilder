@@ -57,6 +57,25 @@ INT  10  (+0)
 WIS  10  (+0)
 CHA  10  (+0)
 ```
+A low ability score produces a negative modifier:
+
+```console
+$ charsheet create --name "Weakling" --strength 7 -o weakling.json
+Created Weakling and saved to weakling.json
+
+$ charsheet show weakling.json
+Weakling
+Level 1 Human Fighter
+
+Ability Scores
+--------------
+STR   7  (-2)
+DEX  10  (+0)
+CON  10  (+0)
+INT  10  (+0)
+WIS  10  (+0)
+CHA  10  (+0)
+```
 
 Run `charsheet create --help` to see every option.
 
