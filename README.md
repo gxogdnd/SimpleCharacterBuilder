@@ -21,6 +21,21 @@ The friendliest way in is the interactive menu — run `charsheet menu` and pick
 an action by number (create, show, browse races/classes/skills); it loops until
 you quit.
 
+Example:
+
+```console
+$ charsheet menu
+
+1. Create Character
+2. Show Character
+3. Browse Races
+4. Browse Classes
+5. Browse Skills
+6. Quit
+
+Choose an option:
+```
+
 Or jump straight to the interactive builder, which asks one question at a time
 and lets you pick a race and class from the SRD lists:
 
